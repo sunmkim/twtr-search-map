@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tweet Search Map</title>
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+	   <!-- external js files -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAgHGngRMEYNutNzEsxW7je4Tkx3nw_tQ"></script>
+    <script src="{{ url_for('static', filename='google_map.js') }}" async></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" async></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js" async></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js" async></script>
+
+</head>
+
+<body>
+  <h2>See Tweets, Real-Time!</h2>
+    <form action="">
+      <input type="text" placeholder="type keyword(s) here">
+      <button type="button" class="btn btn-success">Search</button>
+    </form>
+    <div id='map-canvas'></div>
+
+</body>
+
+
+</html>
