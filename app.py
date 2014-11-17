@@ -23,19 +23,22 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/')
 def index():
-  if request.method == 'GET':
 	return render_template('index.html')
-  else:
+
+
+@app.route('/search', methods=['POST'])
+def search():
 	search_term = request.form['tweet']
 	search_term_hashtag = '#' + search_term
 	
 	listener = StdOutListener()
 	
 	stream = tweepy.Stream(auth, listener)
-	stream.filter(track=[search_term or search_term_hashtag])
-
+	stream.filter(track=[search_term or search_term_hashtag],
+		async=True) # make sure stream is non-blocking
+	return '200 OK'
 
 
 if __name__ == '__main__':
