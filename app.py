@@ -34,8 +34,8 @@ def index():
 	listener = StdOutListener()
 	
 	stream = tweepy.Stream(auth, listener)
-	print 'Stream started...'
 	stream.filter(track=[search_term or search_term_hashtag])
+
 
 
 if __name__ == '__main__':
