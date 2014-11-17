@@ -1,0 +1,7 @@
+# consumer key & secret
+CONSUMER_KEY = "IzC5DyclFOigIR8D5gAaQQDPH"
+CONSUMER_SECRET = "5sJ27XQFMTKI9sxwpiCAjEui0b4Ws6Mis1QbwzuZZxRvPDnagu"
+
+# access token
+ACCESS_TOKEN = "2881128166-kuC4nBi6Ga6xLRp341kVfdqVzj7Q1xlHZvsD1fS"
+ACCESS_TOKEN_SECRET = "NghDsPi3wBgky0nVvJsoEX53nUTTmmvODn8bUtzwTibY1"
