@@ -9,11 +9,13 @@ Since learning Express for NodeJS, I've been really interested in making somethi
 and I thought this would be a fun and challenging project to take on, and it certainly was :)
 
 
+
 ## Technologies Used:
 * Flask
 * Redis
 * Tweepy
 * Google API & JQuery for client-side
+
 
 
 ## Real-Time Streaming
