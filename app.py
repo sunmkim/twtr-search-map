@@ -60,5 +60,6 @@ def stream():
 if __name__ == '__main__':
 	app.run(debug = True, port=8000)
 
-
+## run "gunicorn --debug --worker-class=gevent -t 99999 app:app --log-file=-" in terminal
+## make sure to run "redis-server" in another tab in terminal
 
