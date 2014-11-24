@@ -1,6 +1,7 @@
 # Geo-Locating Tweets in Real-Time
 
 ***** Project Still in Progress *****
+
 First off, I'd like to thank my friend [Mike Discenza](https://github.com/mdiscenza) and his [twitter_map](https://github.com/mdiscenza/twitter_map) project for the inspiration. In the initial stages of this project, I referred to his repo to get a better sense of how to utillize the [tweepy](https://github.com/tweepy/tweepy) library. 
 
 This application geo-locates, in real-time, tweets that contain a word or hashtag given 
