@@ -6,7 +6,7 @@ var MapModel = Backbone.Model.extend({
 	            lat: 40.713,
 	            lng: -74.000
 	        },
-	        zoom: 11,
+	        zoom: 4,
     	};
     	this.set('mapOptions', mapOptions);
 	}
@@ -28,28 +28,34 @@ var MapView = Backbone.View.extend({
 
 // define view for map markers
 var MarkerView = Backbone.View.extend({
-
-	el: $('.log'),
-
 	marker_info: {},
 
 	initialize: function(options) {
 		this.marker_info = options.marker_info;
 	},
 
-
 	render: function(){	
+		var self = this;
 		var myLatLng = new google.maps.LatLng(this.marker_info.location[0], this.marker_info.location[1]);
 		var marker = new google.maps.Marker({
 			map: this.model.map,
 			position: myLatLng
-		});	
+		});
+
+		// define infowindow
+		var infowindow = new google.maps.InfoWindow({
+		    content: JSON.stringify(this.marker_info)
+		});
+
+		// set marker with info-window on map
 		if (typeof this.marker_info.text !== 'undefined'){
 			marker.setMap(this.model.attributes.map);
-			console.log(myLatLng);
-			console.log(this.model.attributes.map);
-			console.log('reached marker set func');
+			// open info-window when marker is clicked
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(self.model.attributes.map, marker);
+			});
 		}
+		
 		return this;
 	}
 });

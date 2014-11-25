@@ -9,7 +9,7 @@
     <a href="https://github.com/kimasx/twtr-search-map">About</a>
     <br>
   <h2>See Tweets, Real-Time!</h2>
-    <form method="POST" action="/search">
+    <form method="POST" action="{{ url_for('streamTweets')}}">
       <input type="text" name="tweet" placeholder="Type keyword(s) here"/>
       <input type="submit" class='btn' value="Search"/>
     </form>
