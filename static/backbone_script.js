@@ -28,24 +28,27 @@ var MapView = Backbone.View.extend({
 
 // define view for map markers
 var MarkerView = Backbone.View.extend({
+
 	el: $('.log'),
 
-	marker_info: {
-		username: '',
-		text: '',
-		created_at: '',
-		location: []
+	marker_info: {},
+
+	initialize: function(options) {
+		this.marker_info = options.marker_info;
 	},
 
+
 	render: function(){	
-		var myLatLng = new google.maps.LatLng(this.marker_info.get('location')[0], this.marker_info.get('location')[1]);
+		var myLatLng = new google.maps.LatLng(this.marker_info.location[0], this.marker_info.location[1]);
 		var marker = new google.maps.Marker({
-			map: this.model.map
+			map: this.model.map,
+			position: myLatLng
 		});	
-        console.log('MARKER VIEW: ', marker);
-		if (typeof this.model.get('text') !== 'undefined'){
-			marker.setMap(this.model);
-			// this.$el.append("<li>"+this.model.get('text')+"</li>");
+		if (typeof this.marker_info.text !== 'undefined'){
+			marker.setMap(this.model.attributes.map);
+			console.log(myLatLng);
+			console.log(this.model.attributes.map);
+			console.log('reached marker set func');
 		}
 		return this;
 	}
