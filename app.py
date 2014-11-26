@@ -1,6 +1,6 @@
 #!venv/bin/python
 
-from flask import Flask, request, render_template, Response, stream_with_context, redirect, url_for
+from flask import Flask, request, render_template, Response, stream_with_context, redirect, url_for, flash
 from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 
 
@@ -35,7 +35,7 @@ def streamTweets():
 	search_term = request.form['tweet']
 	search_term_hashtag = '#' + search_term
 	# instantiate listener
-	listener = StdOutListener()	
+	listener = StdOutListener()
 	# stream object uses listener we instantiated above to listen for data
 	stream = tweepy.Stream(auth, listener)
 	stream.filter(track=[search_term or search_term_hashtag],
@@ -52,6 +52,7 @@ def stream():
 		pubsub = red.pubsub()
 		# subscribe to tweet_stream channel
 		pubsub.subscribe('tweet_stream')
+    # initiate server-sent events on messages pushed to channel
 		for message in pubsub.listen():
 			yield 'data: %s\n\n' % message['data']
 	return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
@@ -62,4 +63,3 @@ if __name__ == '__main__':
 
 ## run "gunicorn --debug --worker-class=gevent -t 99999 app:app --log-file=-" in terminal
 ## make sure to run "redis-server" in another tab in terminal
-

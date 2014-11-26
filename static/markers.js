@@ -4,11 +4,11 @@ map.initMap();
 var mapView = new MapView({model: map});
 mapView.render();
 
-
 // listen for events from /stream decorator
 var source = new EventSource(
     "/stream"
 );
+
 source.onmessage = function(event){
 	// convert event.data str to obj
 	event_source_tweet = JSON.parse(event.data);
