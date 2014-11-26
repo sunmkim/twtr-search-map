@@ -3,7 +3,7 @@ var MapModel = Backbone.Model.extend({
 	initMap: function() {
 		var mapOptions = {
 	        center: {
-	            lat: 40.713,
+	            lat: 30.713,
 	            lng: -74.000
 	        },
 	        zoom: 4,
@@ -15,8 +15,9 @@ var MapModel = Backbone.Model.extend({
 
 // define view for google map
 var MapView = Backbone.View.extend({
-	initialize: function() {
-		this.model.set('map', 
+	// initialize map attr to google map instance
+  initialize: function() {
+		this.model.set('map',
 			new google.maps.Map(document.getElementById('map-canvas'), this.model.get('mapOptions'))
 		);
 	},
@@ -34,7 +35,7 @@ var MarkerView = Backbone.View.extend({
 		this.marker_info = options.marker_info;
 	},
 
-	render: function(){	
+	render: function(){
 		var self = this;
 		var myLatLng = new google.maps.LatLng(this.marker_info.location[0], this.marker_info.location[1]);
 		var marker = new google.maps.Marker({
@@ -42,9 +43,13 @@ var MarkerView = Backbone.View.extend({
 			position: myLatLng
 		});
 
-		// define infowindow
+    var contentString = '<h4>'+this.marker_info.username +'</h4>'
+                          + '<p>'+ this.marker_info.text +'</p>'
+                          + '<p><i>Tweeted on '+ this.marker_info.created_at.substring(0,19) + this.marker_info.created_at.substring(25) + '</i></p>';
+    console.log(this.marker_info.created_at);
+		// define info-window
 		var infowindow = new google.maps.InfoWindow({
-		    content: JSON.stringify(this.marker_info)
+		    content: contentString
 		});
 
 		// set marker with info-window on map
@@ -55,7 +60,7 @@ var MarkerView = Backbone.View.extend({
 				infowindow.open(self.model.attributes.map, marker);
 			});
 		}
-		
+
 		return this;
 	}
 });
