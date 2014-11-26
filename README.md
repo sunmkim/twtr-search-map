@@ -2,10 +2,10 @@
 
 ***** Project Still in Progress *****
 
-First off, I'd like to thank my friend [Mike Discenza](https://github.com/mdiscenza) and his [twitter_map](https://github.com/mdiscenza/twitter_map) project for the inspiration. In the initial stages of this project, I referred to his repo to get a better sense of how to utillize the [tweepy](https://github.com/tweepy/tweepy) library. 
+First off, I'd like to thank my friend [Mike Discenza](https://github.com/mdiscenza) and his [twitter_map](https://github.com/mdiscenza/twitter_map) project for the inspiration. In the initial stages of this project, I referred to his repo to get a better sense of how to utillize the [tweepy](https://github.com/tweepy/tweepy) library.
 
-This application geo-locates, in real-time, tweets that contain a word or hashtag given 
-by the user. It only tracks tweets that allow the location feature, so it is not meant to be a comprehensive track of all tweets around the world. 
+This application geo-locates, in real-time, tweets that contain a word or hashtag given
+by the user. It only tracks tweets that allow the location feature, so it is not meant to be a comprehensive track of all tweets around the world.
 
 Since learning Express for NodeJS, I've been really interested in making something with Flask,
 and I thought this would be a fun and challenging project to take on, and it certainly was :)
@@ -22,7 +22,7 @@ and I thought this would be a fun and challenging project to take on, and it cer
 
 ## Real-Time Streaming
 It was actually quite simple to initiate a filter-stream for tweets with the tweepy library.
-The really difficult part of this project for me was figuring out how to push that data from the Flask server to the client in real-time. Python uses a WSGI-based server which is a synchronous protocol and can only handle one request at a time. 
+The really difficult part of this project for me was figuring out how to push that data from the Flask server to the client in real-time. Python uses a WSGI-based server which is a synchronous protocol and can only handle one request at a time.
 
 There are multiple ways to handle real-time data with Python and Flask, four of them being:
 * AJAX
@@ -34,7 +34,7 @@ There are multiple ways to handle real-time data with Python and Flask, four of 
 Classic AJAX case. To use AJAX, I would have had to code an infinite loop on the client-side that would request the Flask server for tweets in intervals.
 
 ### Long Polling
-The server would have to listen for the twitter-stream, wait for a tweet to come in, and then send a response 
+The server would have to listen for the twitter-stream, wait for a tweet to come in, and then send a response
 back to the client as soon as a tweet is received from the stream. The client would then have to immediately
 send back another request to the server when that requested information is retrieved by the browser.
 
@@ -46,8 +46,15 @@ This was ultimately my choice for transferring real-time tweets from server to c
 
 
 
-
-
-
-
-
+## Running This App
+To run this app on your local machine, run these commands:
+First,
+```
+git clone https://github.com/kimasx/twtr-search-map.git
+```
+then go into the repo directory and run
+```
+pip install flask redis gevent gunicorn
+gunicorn --debug --worker-class=gevent -t 99999 app:app
+```
+Don't forget to have your redis-server running as well!
