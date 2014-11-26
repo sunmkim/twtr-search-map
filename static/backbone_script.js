@@ -40,10 +40,10 @@ var MarkerView = Backbone.View.extend({
 			map: this.model.map,
 			position: myLatLng
 		});
-    var contentString = '<h4>'+this.marker_info.username +'</h4>'
-                          + '<p>'+ this.marker_info.text +'</p>'
-                          + '<p><i>Tweeted on '+ this.marker_info.created_at.substring(0,19)
-                          + this.marker_info.created_at.substring(25) + '</i></p>';
+	    var contentString = '<h4>'+this.marker_info.username +'</h4>' +
+	    					'<p>'+ this.marker_info.text +'</p>' +
+	    					'<p><i>Tweeted on '+ this.marker_info.created_at.substring(0,19) +
+	    					this.marker_info.created_at.substring(25) + '</i></p>';
 		// define info-window
 		var infowindow = new google.maps.InfoWindow({
 		    content: contentString
