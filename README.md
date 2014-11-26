@@ -1,6 +1,5 @@
 # Geo-Locating Tweets in Real-Time
 
-***** Project Still in Progress *****
 
 First off, I'd like to thank my friend [Mike Discenza](https://github.com/mdiscenza) and his [twitter_map](https://github.com/mdiscenza/twitter_map) project for the inspiration. In the initial stages of this project, I referred to his repo to get a better sense of how to utillize the [tweepy](https://github.com/tweepy/tweepy) library.
 
@@ -16,7 +15,7 @@ and I thought this would be a fun and challenging project to take on, and it cer
 * Flask
 * Redis
 * Tweepy
-* BackboneJS, Google API & JQuery on client-side
+* BackboneJS
 
 
 
@@ -48,7 +47,6 @@ This was ultimately my choice for transferring real-time tweets from server to c
 
 ## Running This App
 To run this app on your local machine, run these commands:
-First,
 ```
 git clone https://github.com/kimasx/twtr-search-map.git
 ```
