@@ -23,6 +23,8 @@ auth.set_access_token(access_token, access_token_secret)
 app = Flask(__name__)
 red = redis.StrictRedis()
 
+# Add a place to keep track of current streams
+streams = []
 
 @app.route('/')
 def index():
@@ -32,12 +34,18 @@ def index():
 @app.route('/search', methods=['POST'])
 # gets search-keyword and starts stream
 def streamTweets():
+        # cancel old streams
+        for stream in streams:
+            stream.disconnect()
+
 	search_term = request.form['tweet']
 	search_term_hashtag = '#' + search_term
 	# instantiate listener
 	listener = StdOutListener()
 	# stream object uses listener we instantiated above to listen for data
 	stream = tweepy.Stream(auth, listener)
+        # add this stream to the global list
+        streams.append(stream)
 	stream.filter(track=[search_term or search_term_hashtag],
 		async=True) # make sure stream is non-blocking
 	redirect('/stream') # execute '/stream' sse
