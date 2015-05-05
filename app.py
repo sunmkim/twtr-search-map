@@ -5,6 +5,7 @@ from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SEC
 
 
 import tweepy, redis
+import signal
 from tstream import StdOutListener
 
 # consumer key and secrets
@@ -34,9 +35,9 @@ def index():
 @app.route('/search', methods=['POST'])
 # gets search-keyword and starts stream
 def streamTweets():
-        # cancel old streams
-        for stream in streams:
-            stream.disconnect()
+    # cancel old streams
+    for stream in streams:
+        stream.disconnect()
 
 	search_term = request.form['tweet']
 	search_term_hashtag = '#' + search_term
@@ -44,8 +45,8 @@ def streamTweets():
 	listener = StdOutListener()
 	# stream object uses listener we instantiated above to listen for data
 	stream = tweepy.Stream(auth, listener)
-        # add this stream to the global list
-        streams.append(stream)
+    # add this stream to the global list
+    streams.append(stream)
 	stream.filter(track=[search_term or search_term_hashtag],
 		async=True) # make sure stream is non-blocking
 	redirect('/stream') # execute '/stream' sse
@@ -60,9 +61,10 @@ def stream():
 		pubsub = red.pubsub()
 		# subscribe to tweet_stream channel
 		pubsub.subscribe('tweet_stream')
-    # initiate server-sent events on messages pushed to channel
+    	# initiate server-sent events on messages pushed to channel
 		for message in pubsub.listen():
 			yield 'data: %s\n\n' % message['data']
+		redirect('/stream/')
 	return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
 
 

@@ -10,8 +10,8 @@
     <br>
   <h2>See Tweets, Real-Time!</h2>
     <form method="POST" action="{{ url_for('streamTweets')}}">
-      <input type="text" name="tweet" placeholder="Type keyword(s) here"/>
-      <input type="submit" class='btn' value="Search"/>
+      <input type="text" name="tweet" class="form-control" placeholder="Type keyword(s) here"/>
+      <input type="submit" class="btn btn-success" value="Search"/>
     </form>
     <div id='map-canvas'></div>
 

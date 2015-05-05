@@ -56,7 +56,7 @@ pip install flask redis tweepy simplejson gevent gunicorn
 brew install redis
 gunicorn --debug --worker-class=gevent -t 99999 app:app
 ```
-Don't forget to have your redis-server running as well!
+Don't forget to have your redis-server running as well, and the app should be on `localhost:8000`.
 
 
 ## Future Considerations/Issues

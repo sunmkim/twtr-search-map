@@ -30,6 +30,8 @@ class StdOutListener(tweepy.StreamListener):
 			# publish to 'tweet_stream' channel
 			red.publish('tweet_stream', json.dumps(tweet))
 			return True
+		else:
+			pass
 
 	def on_error(self, status):
 		print status
