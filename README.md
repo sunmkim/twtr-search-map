@@ -61,6 +61,6 @@ Don't forget to have your redis-server running as well!
 
 ## Future Considerations/Issues
 - The major feature bug right now is that when you put in a new search, it doesn't stop the previous search. The server initiates a new search on top of the previous one. The Python server needs to be fixed so that it stops the previous stream listener.
-** Issue fixed. Big thanks to [mplorentz](https://github.com/mplorentz)! **
+	***Issue fixed. Big thanks to [mplorentz](https://github.com/mplorentz)!***
 - A future feature that would be cool to implement is to have the app running for a certain amount of time given by the user and return a graph or chart of some sorts using d3.js.
 
