@@ -29,47 +29,45 @@ streams = []
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+  return render_template('index.html')
 
 
 @app.route('/search', methods=['POST'])
 # gets search-keyword and starts stream
 def streamTweets():
-    # cancel old streams
-    for stream in streams:
-        stream.disconnect()
+  # cancel old streams
+  for stream in streams:
+    stream.disconnect()
 
-	search_term = request.form['tweet']
-	search_term_hashtag = '#' + search_term
-	# instantiate listener
-	listener = StdOutListener()
-	# stream object uses listener we instantiated above to listen for data
-	stream = tweepy.Stream(auth, listener)
-    # add this stream to the global list
-    streams.append(stream)
-	stream.filter(track=[search_term or search_term_hashtag],
-		async=True) # make sure stream is non-blocking
-	redirect('/stream') # execute '/stream' sse
-	return render_template('index.html')
-
-
-@app.route('/stream')
-def stream():
-	# we will use Pub/Sub process to send real-time tweets to client
-	def event_stream():
-		# instantiate pubsub
-		pubsub = red.pubsub()
-		# subscribe to tweet_stream channel
-		pubsub.subscribe('tweet_stream')
-    	# initiate server-sent events on messages pushed to channel
-		for message in pubsub.listen():
-			yield 'data: %s\n\n' % message['data']
-		redirect('/stream/')
-	return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
+  search_term = request.form['tweet']
+  search_term_hashtag = '#' + search_term
+  # instantiate listener
+  listener = StdOutListener()
+  # stream object uses listener we instantiated above to listen for data
+  stream = tweepy.Stream(auth, listener)
+  # add this stream to the global list
+  streams.append(stream)
+  stream.filter(track=[search_term or search_term_hashtag],async=True) # make sure stream is non-blocking
+  redirect('/stream') # execute '/stream' sse
+  return render_template('index.html')
 
 
-if __name__ == '__main__':
-	app.run(debug = True, port=8000)
+  @app.route('/stream')
+  def stream():
+    # we will use Pub/Sub process to send real-time tweets to client
+    def event_stream():
+      # instantiate pubsub
+      pubsub = red.pubsub()
+      # subscribe to tweet_stream channel
+      pubsub.subscribe('tweet_stream')
+      # initiate server-sent events on messages pushed to channel
+      for message in pubsub.listen():
+        yield 'data: %s\n\n' % message['data']
+        redirect('/stream/')
+    return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
+
+    if __name__ == '__main__':
+      app.run(debug = True, port=8000)
 
 ## run "gunicorn --debug --worker-class=gevent -t 99999 app:app --log-file=-" in terminal
 ## make sure to run "redis-server" in another tab in terminal
