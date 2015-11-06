@@ -52,22 +52,22 @@ def streamTweets():
   return render_template('index.html')
 
 
-  @app.route('/stream')
-  def stream():
-    # we will use Pub/Sub process to send real-time tweets to client
-    def event_stream():
-      # instantiate pubsub
-      pubsub = red.pubsub()
-      # subscribe to tweet_stream channel
-      pubsub.subscribe('tweet_stream')
-      # initiate server-sent events on messages pushed to channel
-      for message in pubsub.listen():
-        yield 'data: %s\n\n' % message['data']
-        redirect('/stream/')
-    return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
+@app.route('/stream')
+def stream():
+  # we will use Pub/Sub process to send real-time tweets to client
+  def event_stream():
+    # instantiate pubsub
+    pubsub = red.pubsub()
+    # subscribe to tweet_stream channel
+    pubsub.subscribe('tweet_stream')
+    # initiate server-sent events on messages pushed to channel
+    for message in pubsub.listen():
+      yield 'data: %s\n\n' % message['data']
+      # redirect('/stream/')
+  return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
 
-    if __name__ == '__main__':
-      app.run(debug = True, port=8000)
+if __name__ == '__main__':
+  app.run(debug = True, port=8000)
 
 ## run "gunicorn --debug --worker-class=gevent -t 99999 app:app --log-file=-" in terminal
 ## make sure to run "redis-server" in another tab in terminal

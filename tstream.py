@@ -20,17 +20,19 @@ class StdOutListener(tweepy.StreamListener):
 	def on_data(self, data):
 		decoded = json.loads(data)
 		# listen only for tweets that is geo-location enabled
-		if decoded['geo']:
-			tweet = {}
-			tweet['screen_name'] = '@'+decoded['user']['screen_name']
-			tweet['text'] = decoded['text'].encode('ascii', 'ignore')
-			tweet['coord'] = decoded['geo']['coordinates']
-			tweet['created_at'] = decoded['created_at']
-			print 'A tweet received'
-			# publish to 'tweet_stream' channel
-			red.publish('tweet_stream', json.dumps(tweet))
-			return True
-		else:
+		try: 
+			if decoded['geo']:
+				tweet = {}
+				tweet['screen_name'] = '@'+decoded['user']['screen_name']
+				tweet['text'] = decoded['text'].encode('ascii', 'ignore')
+				tweet['coord'] = decoded['geo']['coordinates']
+				tweet['created_at'] = decoded['created_at']
+				print 'A tweet received'
+				print tweet
+				# publish to 'tweet_stream' channel
+				red.publish('tweet_stream', json.dumps(tweet))
+				return True
+		except:
 			pass
 
 	def on_error(self, status):
